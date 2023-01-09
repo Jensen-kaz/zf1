@@ -318,7 +318,7 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             }
         }
 
-        if (!empty($this->_config['ssl_cert'])) {
+        if (!empty($this->_config['ssl']) && !empty($this->_config['ssl_cert'])) {
             $this->_connection->ssl_set(NULL, NULL, $this->_config['ssl_cert'], NULL, NULL);
         }
 
