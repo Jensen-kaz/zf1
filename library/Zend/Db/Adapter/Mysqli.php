@@ -318,6 +318,10 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             }
         }
 
+        if (!empty($this->_config['ssl_cert'])) {
+            $this->_connection->ssl_set(NULL, NULL, $this->_config['ssl_cert'], NULL, NULL);
+        }
+
         // Suppress connection warnings here.
         // Throw an exception instead.
         $_isConnected = @mysqli_real_connect(
@@ -327,7 +331,8 @@ class Zend_Db_Adapter_Mysqli extends Zend_Db_Adapter_Abstract
             $this->_config['password'],
             $this->_config['dbname'],
             $port,
-            $socket
+            $socket,
+            ($this->_config['ssl'] ? MYSQLI_CLIENT_SSL : 0)
         );
 
         if ($_isConnected === false || mysqli_connect_errno()) {
